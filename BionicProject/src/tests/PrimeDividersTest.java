@@ -26,4 +26,9 @@ public class PrimeDividersTest {
 	public void testDividers() {
 		assertEquals(PrimeDividers.findDividers(27).toString(), "[3, 9, 27]");
 	}
+	
+	@Test
+	public void testNotPrime() {
+		assertFalse(PrimeDividers.isPrime(6));
+	}
 }
