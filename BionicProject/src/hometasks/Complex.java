@@ -21,7 +21,7 @@ public class Complex {
 	}
 
 	public double abs() {
-		return Math.sqrt(realPart + imaginePart);
+		return Math.sqrt(realPart * realPart + imaginePart * imaginePart);
 	}
 
 	@Override
