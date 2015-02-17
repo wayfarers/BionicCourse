@@ -59,7 +59,7 @@ public class DaysLived {
 		
 		daysLived += period.getDays();
 		
-		System.out.println("You was born at " + dayOfWeek);
+		System.out.println("You were born at " + dayOfWeek);
 		System.out.println("You are " + daysLived + " days old.");
 		
 	}
