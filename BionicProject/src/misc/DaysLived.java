@@ -4,21 +4,26 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
+import java.util.Scanner;
 
 public class DaysLived {
 	public static void main(String[] args) {
-		String date = "1989-12-31";
-		LocalDate birthdayDate = getDate(date);
-		getBirthdayData(birthdayDate);
+		LocalDate birthdayDate = getDate();
+		if (birthdayDate != null) {
+			getBirthdayData(birthdayDate);
+		}
 	}
 	
-	public static LocalDate getDate(String s) {
+	public static LocalDate getDate() {
+		System.out.println("Enter date in format YYYY-MM-DD");
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
 		LocalDate birthdayDate = null;
 		try {
-			birthdayDate = LocalDate.parse(s);
+			birthdayDate = LocalDate.parse(scan.nextLine());
 		} catch (DateTimeException e){
-			System.out.println("Wrong date format. Try again.");
-			
+			System.out.println("Wrong date format.");
+			return null;
 		}
 		return birthdayDate;
 	}
@@ -54,7 +59,7 @@ public class DaysLived {
 		
 		daysLived += period.getDays();
 		
-		System.out.println("You was born at " + dayOfWeek);
+		System.out.println("You were born at " + dayOfWeek);
 		System.out.println("You are " + daysLived + " days old.");
 		
 	}
