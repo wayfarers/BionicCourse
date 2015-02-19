@@ -7,7 +7,7 @@ import java.time.Period;
 
 public class DaysLived {
 	public static void main(String[] args) {
-		String date = "1990-05-10";
+		String date = "1989-12-31";
 		LocalDate birthdayDate = getDate(date);
 		getBirthdayData(birthdayDate);
 	}
