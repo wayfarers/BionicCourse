@@ -1,8 +1,10 @@
-package lesson07;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
+
+import lesson07.BarrierDeposit;
 
 import org.junit.Test;
 
