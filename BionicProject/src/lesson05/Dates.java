@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Dates {
+	@SuppressWarnings("static-access")
 	public static void main(String[] args) {
 		//		Date currentDate = new Date();
 		SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
