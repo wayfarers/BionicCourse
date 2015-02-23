@@ -3,21 +3,12 @@ package lesson07;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class BarrierDeposit {
-	protected double interestRate;
-	protected double sum;
-	protected int dayLong;
-	protected LocalDate startDate;
-	protected LocalDate endDate;
-	
-	
+import lesson08.DepoBase;
+
+public class BarrierDeposit extends DepoBase {
 	
 	public BarrierDeposit(double interestRate, double sum, LocalDate startDate, int dayLong) {
-		this.interestRate = interestRate;
-		this.sum = sum;
-		this.startDate = startDate;
-		this.dayLong = dayLong;
-		endDate = startDate.plusDays(dayLong);
+		super(interestRate, sum, startDate, dayLong);
 		if (sum > 100000.0) {
 			this.interestRate += 2;
 		} else if (sum > 50000.0) {

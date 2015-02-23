@@ -3,37 +3,29 @@ package lesson07;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class SimpleDeposit {
-	protected double interestRate;
-	protected double sum;
-	protected int dayLong;
-	protected LocalDate startDate;
-	protected LocalDate endDate;
-	
+import lesson08.DepoBase;
+
+public class SimpleDeposit extends DepoBase{
 	
 	
 	public SimpleDeposit(double interestRate, double sum, LocalDate startDate, int dayLong) {
-		this.interestRate = interestRate;
-		this.sum = sum;
-		this.startDate = startDate;
-		this.dayLong = dayLong;
-		endDate = startDate.plusDays(dayLong);
+		super(interestRate, sum, startDate, dayLong);
 	}
 	
 	public double getInterest() {
 		double interest = 0;
 		if (startDate.isLeapYear() && endDate.isLeapYear()) {
-			interest = sum * (interestRate / 100.0) * (dayLong / 366.0);
+			interest = getPeriodInterest(sum, dayLong, true);
 		} else if(startDate.isLeapYear() && !endDate.isLeapYear()) {
-			long leapDays = startDate.until(LocalDate.of(startDate.getYear() + 1, 1, 1), ChronoUnit.DAYS);
-			interest = sum * (interestRate / 100.0) * (leapDays / 366.0);
-			interest += sum * (interestRate / 100.0) * ((dayLong - leapDays) / 365.0);
+			int leapDays = (int) startDate.until(LocalDate.of(startDate.getYear() + 1, 1, 1), ChronoUnit.DAYS);
+			interest = getPeriodInterest(sum, leapDays, true);
+			interest += getPeriodInterest(sum, dayLong - leapDays, false);
 		} else if (!startDate.isLeapYear() && endDate.isLeapYear()) {
-			long noLeapDays = startDate.until(LocalDate.of(startDate.getYear() + 1, 1, 1), ChronoUnit.DAYS);
-			interest = sum * (interestRate / 100.0) * (noLeapDays / 365.0);
-			interest += sum * (interestRate / 100.0) * ((dayLong - noLeapDays) / 365.0);
+			int noLeapDays = (int) startDate.until(LocalDate.of(startDate.getYear() + 1, 1, 1), ChronoUnit.DAYS);
+			interest = getPeriodInterest(sum, noLeapDays, false);
+			interest += getPeriodInterest(sum, dayLong - noLeapDays, false);
 		} else if(!startDate.isLeapYear() && !endDate.isLeapYear()) {
-			interest = sum * (interestRate / 100.0) * (dayLong / 365.0);
+			interest = getPeriodInterest(sum, dayLong, false);
 		}
 		return Math.round(interest * 100.0) / 100.0;
 	}
