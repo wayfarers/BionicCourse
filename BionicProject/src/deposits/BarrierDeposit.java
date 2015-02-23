@@ -3,7 +3,7 @@ package deposits;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class BarrierDeposit extends DepoBase {
+public class BarrierDeposit extends DepoBase implements Deposit {
 	
 	public BarrierDeposit(double interestRate, double sum, LocalDate startDate, int dayLong) {
 		super(interestRate, sum, startDate, dayLong);

@@ -3,7 +3,7 @@ package deposits;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class SimpleDeposit extends DepoBase{
+public class SimpleDeposit extends DepoBase implements Deposit {
 	
 	
 	public SimpleDeposit(double interestRate, double sum, LocalDate startDate, int dayLong) {

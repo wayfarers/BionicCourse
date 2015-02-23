@@ -2,7 +2,7 @@ package deposits;
 
 import java.time.LocalDate;
 
-abstract public class DepoBase {
+public class DepoBase {
 	protected double interestRate;
 	protected double sum;
 	protected int dayLong;
@@ -11,8 +11,6 @@ abstract public class DepoBase {
 	
 	public DepoBase() {
 	}
-	
-	public abstract double getInterest();
 	
 	public DepoBase(double interestRate, double sum, LocalDate startDate, int dayLong) {
 		this.interestRate = interestRate;

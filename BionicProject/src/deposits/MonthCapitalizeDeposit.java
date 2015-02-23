@@ -2,7 +2,7 @@ package deposits;
 
 import java.time.LocalDate;
 
-public class MonthCapitalizeDeposit extends DepoBase{
+public class MonthCapitalizeDeposit extends DepoBase implements Deposit {
 	protected int daysLeft;
 	
 	
