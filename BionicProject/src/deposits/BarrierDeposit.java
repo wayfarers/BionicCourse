@@ -1,9 +1,7 @@
-package lesson07;
+package deposits;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
-import lesson08.DepoBase;
 
 public class BarrierDeposit extends DepoBase {
 	

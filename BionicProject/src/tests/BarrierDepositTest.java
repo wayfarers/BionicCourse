@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 
-import lesson07.BarrierDeposit;
-
 import org.junit.Test;
+
+import deposits.BarrierDeposit;
 
 public class BarrierDepositTest {
 

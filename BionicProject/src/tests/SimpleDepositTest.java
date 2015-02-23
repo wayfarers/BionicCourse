@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 
-import lesson07.SimpleDeposit;
-
 import org.junit.Test;
+
+import deposits.SimpleDeposit;
 
 public class SimpleDepositTest {
 

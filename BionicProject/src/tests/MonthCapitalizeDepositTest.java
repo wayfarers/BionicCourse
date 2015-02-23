@@ -1,11 +1,12 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
-import hometasks.MonthCapitalizeDeposit;
 
 import java.time.LocalDate;
 
 import org.junit.Test;
+
+import deposits.MonthCapitalizeDeposit;
 
 public class MonthCapitalizeDepositTest {
 

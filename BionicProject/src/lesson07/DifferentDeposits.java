@@ -1,10 +1,11 @@
 package lesson07;
 
-import hometasks.MonthCapitalizeDeposit;
-
 import java.time.LocalDate;
 
-import lesson08.DepoBase;
+import deposits.BarrierDeposit;
+import deposits.DepoBase;
+import deposits.MonthCapitalizeDeposit;
+import deposits.SimpleDeposit;
 
 public class DifferentDeposits {
 	public static void main(String[] args) {

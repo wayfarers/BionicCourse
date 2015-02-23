@@ -1,8 +1,6 @@
-package hometasks;
+package deposits;
 
 import java.time.LocalDate;
-
-import lesson08.DepoBase;
 
 public class MonthCapitalizeDeposit extends DepoBase{
 	protected int daysLeft;
