@@ -12,6 +12,10 @@ public class DepoBase {
 	public DepoBase() {
 	}
 	
+	public double getInterest() {
+		return 0;
+	}
+	
 	public DepoBase(double interestRate, double sum, LocalDate startDate, int dayLong) {
 		this.interestRate = interestRate;
 		this.sum = sum;
