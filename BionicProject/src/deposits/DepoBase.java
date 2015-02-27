@@ -27,4 +27,8 @@ public class DepoBase {
 			return sum * (interestRate / 100.0) * (period / 365.0);
 		}
 	}
+	
+	public double getSum() {
+		return sum;
+	}
 }
