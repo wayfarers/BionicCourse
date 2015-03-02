@@ -2,12 +2,15 @@ package lesson10;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import deposits.*;
 
 public class DepoList {
-	ArrayList<Deposit> list = new ArrayList<>();
+	ArrayList<DepoBase> list = new ArrayList<>();
 	
 	public DepoList() {
 		init();
@@ -21,19 +24,39 @@ public class DepoList {
 		list.add(new MonthCapitalizeDeposit(16, 12000, LocalDate.of(2013, 7, 12), 91));
 	}
 	
+	public ArrayList<DepoBase> getList() {
+		return list;
+	}
+	
 	public double getPrincipal() {
 		double principal = 0;
-		for (Deposit deposit : list) {
+		for (DepoBase deposit : list) {
 			principal += deposit.getSum();
 		}
 		return principal;
 	}
 	
 	public void remove() {
-		for (Iterator<Deposit> it = list.iterator();it.hasNext();) {
+		for (Iterator<DepoBase> it = list.iterator();it.hasNext();) {
 			if (it.next().getSum() < 10000) {
 				it.remove();
 			}
 		}
 	}
+	
+	public void printInfo() {
+		for (DepoBase dep : list) {
+			System.out.println("" + dep.getSum() + "\t\t" + dep.getInterest());
+		}
+	}
+	
+	public void sort() {
+		Collections.sort(list);
+	}
+	
+	public void sort2() {
+		list.sort(new DepoBase.DepoComparator());
+	}
+	
+	
 }

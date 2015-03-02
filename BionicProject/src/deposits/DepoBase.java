@@ -1,8 +1,9 @@
 package deposits;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 
-public class DepoBase {
+abstract public class DepoBase implements Comparable<DepoBase> {
 	protected double interestRate;
 	protected double sum;
 	protected int dayLong;
@@ -30,5 +31,33 @@ public class DepoBase {
 	
 	public double getSum() {
 		return sum;
+	}
+	
+	public double getInterestRate() {
+		return interestRate;
+	}
+	
+	abstract public double getInterest();
+
+	@Override
+	public int compareTo(DepoBase o) {
+		if ((this.getInterest() - o.getInterest()) > 0) {
+			return 1;
+		} else if ((this.getInterest() - o.getInterest()) < 0) {
+			return -1;
+		}
+		return 0;
+	}
+	
+	public static class DepoComparator implements Comparator<DepoBase>{
+		@Override
+		public int compare(DepoBase o1, DepoBase o2) {
+			if ((o1.getSum() - o2.getSum()) > 0) {
+				return 1;
+			} else if ((o1.getSum() - o2.getSum()) < 0) {
+				return -1;
+			}
+			return 0;
+		}
 	}
 }

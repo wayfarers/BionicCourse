@@ -31,5 +31,4 @@ public class BarrierDeposit extends DepoBase implements Deposit {
 		}
 		return Math.round(interest * 100.0) / 100.0;
 	}
-	
 }
