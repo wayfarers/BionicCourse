@@ -3,17 +3,14 @@ package deposits;
 import java.time.LocalDate;
 
 public class MonthCapitalizeDeposit extends DepoBase implements Deposit {
-	protected int daysLeft;
-	
-	
 	
 	public MonthCapitalizeDeposit(double interestRate, double sum, LocalDate startDate, int dayLong) {
 		super(interestRate, sum, startDate, dayLong);
-		daysLeft = dayLong;
 	}
 	
 	public double getInterest() {
 		double interest = 0;
+		int daysLeft = dayLong;
 		LocalDate tempDate = LocalDate.ofEpochDay(startDate.toEpochDay()).plusDays(1);
 		while (tempDate.isBefore(endDate)) {
 			int tillMonthEnd = tempDate.lengthOfMonth() - tempDate.getDayOfMonth() + 1;

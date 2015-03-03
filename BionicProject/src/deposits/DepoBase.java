@@ -3,7 +3,7 @@ package deposits;
 import java.time.LocalDate;
 import java.util.Comparator;
 
-abstract public class DepoBase implements Comparable<DepoBase> {
+abstract public class DepoBase implements Comparable<DepoBase>{
 	protected double interestRate;
 	protected double sum;
 	protected int dayLong;
