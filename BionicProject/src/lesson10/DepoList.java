@@ -1,12 +1,22 @@
 package lesson10;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import deposits.*;
+import deposits.BarrierDeposit;
+import deposits.DepoBase;
+import deposits.MonthCapitalizeDeposit;
+import deposits.SimpleDeposit;
 
 public class DepoList {
 	List<DepoBase> list = new ArrayList<>();
@@ -45,7 +55,7 @@ public class DepoList {
 	
 	public void printInfo() {
 		for (DepoBase dep : list) {
-			System.out.println("" + dep.getClass().getSimpleName().subSequence(0, 5) + "\t\t\t" + dep.getSum() + "\t\t" + dep.getInterest());
+			System.out.println("" + dep.getClass().getSimpleName().subSequence(0, 6) + "\t\t" + dep.getSum() + "\t\t" + dep.getInterest());
 		}
 	}
 	
@@ -55,5 +65,34 @@ public class DepoList {
 	
 	public void sort2() {
 		list.sort(new DepoBase.DepoComparator());
+	}
+	
+	public void saveList() {
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("depList.dat"))) {
+			for (DepoBase dep : list) {
+				out.writeObject(dep);
+			}
+			System.out.println("Saving complete");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadList() {
+		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("depList.dat"))) {
+			list.clear();
+			while (true) {
+				list.add((DepoBase) in.readObject());
+			}
+		} catch (EOFException e) {
+			System.out.println("Loading complete");
+			return;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
 	}
 }

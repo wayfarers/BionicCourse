@@ -8,7 +8,10 @@ import deposits.DepoBase;
 public class DepoMain {
 	public static void main(String[] args) {
 		DepoList deps = new DepoList();
+		deps.saveList();
+		deps.loadList();
 		deps.printInfo();
+//		deps.printInfo();
 //		System.out.println();
 //		deps.sort();
 //		deps.printInfo();

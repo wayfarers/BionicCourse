@@ -1,9 +1,10 @@
 package deposits;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Comparator;
 
-abstract public class DepoBase implements Comparable<DepoBase>{
+abstract public class DepoBase implements Comparable<DepoBase>, Serializable{
 	protected double interestRate;
 	protected double sum;
 	protected int dayLong;
