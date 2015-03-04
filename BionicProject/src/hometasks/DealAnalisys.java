@@ -23,6 +23,7 @@ public class DealAnalisys<T> {
 		double income1 = deal instanceof DepoBase ? ((DepoBase) deal).getInterest() : ((TBill) deal).getIncome();
 		double income2 = deal2 instanceof DepoBase ? ((DepoBase) deal2).getInterest() : ((TBill) deal2).getIncome();
 
-		return income1 - income2;
+		return Math.round((income1 - income2) * 100) / 100.0;
+//		return income1 - income2;
 	}
 }
