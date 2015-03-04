@@ -1,22 +1,19 @@
-package lesson10;
+package deposits;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import deposits.BarrierDeposit;
-import deposits.DepoBase;
-import deposits.MonthCapitalizeDeposit;
-import deposits.SimpleDeposit;
 
 public class DepoList {
 	List<DepoBase> list = new ArrayList<>();
@@ -93,6 +90,27 @@ public class DepoList {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+	}
+	
+	public void generateReport() {
+		String [] depReport = new String[list.size() + 1];
+		int count = 0;
 		
+//		depReport[count] = "Deposit Type\t\t\tDeposit sum \t Interest\n";
+		depReport[count] = String.format("%1$22s %2$12s \t %3$8s\n", "Deposit Type", "Deposit sum", "Interest");
+		
+		for (DepoBase dep : list) {
+//			depReport[++count] = dep.getClass().getSimpleName() + "\t\t\t" + dep.getSum() + "\t\t" + dep.getInterest();
+			depReport[++count] = String.format("%1$22s %2$12.2f \t %3$8.2f", dep.getClass().getSimpleName(), dep.getSum(), dep.getInterest());
+		}
+		
+		try (PrintWriter out = new PrintWriter(new FileWriter("depReport.txt"))) {
+			for (String string : depReport) {
+				out.println(string);
+			}
+			System.out.println("Report generated");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

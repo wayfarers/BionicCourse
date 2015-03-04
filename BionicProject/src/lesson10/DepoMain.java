@@ -4,13 +4,15 @@ package lesson10;
 import java.util.List;
 
 import deposits.DepoBase;
+import deposits.DepoList;
 
 public class DepoMain {
 	public static void main(String[] args) {
 		DepoList deps = new DepoList();
-		deps.saveList();
-		deps.loadList();
-		deps.printInfo();
+		deps.generateReport();
+//		deps.saveList();
+//		deps.loadList();
+//		deps.printInfo();
 //		deps.printInfo();
 //		System.out.println();
 //		deps.sort();
