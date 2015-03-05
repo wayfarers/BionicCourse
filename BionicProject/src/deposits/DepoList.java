@@ -96,12 +96,15 @@ public class DepoList {
 		String [] depReport = new String[list.size() + 1];
 		int count = 0;
 		
-//		depReport[count] = "Deposit Type\t\t\tDeposit sum \t Interest\n";
-		depReport[count] = String.format("%1$22s %2$12s \t %3$8s\n", "Deposit Type", "Deposit sum", "Interest");
+		depReport[count] = String
+				.format("%1$22s %2$12s %3$12s %4$12s %5$5s\n", "Deposit Type",
+						"Deposit sum", "Interest", "Start date", "Term");
 		
 		for (DepoBase dep : list) {
-//			depReport[++count] = dep.getClass().getSimpleName() + "\t\t\t" + dep.getSum() + "\t\t" + dep.getInterest();
-			depReport[++count] = String.format("%1$22s %2$12.2f \t %3$8.2f", dep.getClass().getSimpleName(), dep.getSum(), dep.getInterest());
+			depReport[++count] = String.format("%1$22s %2$12.2f %3$12.2f %4$12s %5$5d", dep
+					.getClass().getSimpleName(), dep.getSum(), dep
+					.getInterest(), dep.getStartDate().toString(), dep
+					.getDaysLong());
 		}
 		
 		try (PrintWriter out = new PrintWriter(new FileWriter("depReport.txt"))) {

@@ -61,4 +61,12 @@ abstract public class DepoBase implements Comparable<DepoBase>, Serializable{
 			return 0;
 		}
 	}
+	
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+	
+	public int getDaysLong() {
+		return dayLong;
+	}
 }
