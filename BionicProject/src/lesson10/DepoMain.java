@@ -9,7 +9,7 @@ import deposits.DepoList;
 public class DepoMain {
 	public static void main(String[] args) {
 		DepoList deps = new DepoList();
-		deps.generateReport();
+		deps.generateReport("depReport.txt");
 //		deps.saveList();
 //		deps.loadList();
 //		deps.printInfo();
