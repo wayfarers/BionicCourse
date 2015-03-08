@@ -1,5 +1,6 @@
 package lesson13;
 
+import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +16,7 @@ import java.net.URL;
 public class Networking {
 	public static void main(String[] args) throws IOException {
 		URL url = new URL("http://www.ukrstat.gov.ua/express/expr2012/09_12/234.zip"); 
-		InputStream in = url.openStream();
+		InputStream in = new BufferedInputStream(url.openStream());
 		FileOutputStream out = new FileOutputStream("test.zip");
 		int inputInt;
 		while ((inputInt = in.read()) != -1) 
