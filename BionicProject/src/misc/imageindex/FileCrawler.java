@@ -1,10 +1,15 @@
 package misc.imageindex;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class FileCrawler {
 	
-	// TODO: Move counter and total bytes of matched files into the crawler
+	// TODO: Move counter and total bytes of matched files into the crawler (Done)
+	int count = 0;
+	long totalSize = 0;
+	public List<File> machedFiles = new ArrayList<>();
 	
 	public void crawl(String parentDir) {
 		File root = new File(parentDir);
@@ -20,7 +25,11 @@ public abstract class FileCrawler {
 				crawl(file.getAbsolutePath());
 			} else {
 				if (fileMatches(file)) {
-					processFile(file);
+					totalSize += file.length();
+					machedFiles.add(file);
+					if (count++ % 100 == 0)
+						System.out.println("Found " + count + " images, total of " + totalSize / (1024 * 1024) + "Mb");
+//					processFile(file);
 				}
 			}
 		}
@@ -30,5 +39,5 @@ public abstract class FileCrawler {
 		return true;
 	}
 	
-	public abstract void processFile(File f);
+	public abstract void processFiles();
 }

@@ -31,7 +31,6 @@ public class Image {
 	public Image(File file) {
 		BufferedImage  im = null;
 		try {
-			System.out.println("Reading image " +  file.getName());
 			im = ImageIO.read(file);
 			if (im == null)
 				throw new IOException("Image is null");
@@ -41,7 +40,8 @@ public class Image {
 			type = im.getType();
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Reading image " +  file.getName());
+//			e.printStackTrace();
 			isCorrupted = true;
 			errorMessage = e.getMessage();
 		}

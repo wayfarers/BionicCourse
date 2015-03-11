@@ -8,8 +8,10 @@ public class CrawlerTest {
 	public static void main(String[] args) {
 		new FileCrawler() {
 			@Override
-			public void processFile(File f) {
-				System.out.println(f.getName());
+			public void processFiles() {
+				for (File f : machedFiles) {
+					System.out.println(f.getName());
+				}
 			}
 		}.crawl("C:/");
 	}

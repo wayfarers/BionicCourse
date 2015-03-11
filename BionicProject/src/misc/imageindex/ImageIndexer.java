@@ -4,7 +4,6 @@ import java.io.File;
 import java.sql.SQLException;
 
 public class ImageIndexer {
-	
 	ImageDAO imageDao = new ImageDAO();
 	
 	enum ImageExtension {
@@ -12,41 +11,42 @@ public class ImageIndexer {
 	}
 	
 	public void indexImages(String directory) {
+		final long [] startTime = {0};
 		
-		System.out.println("Counting the images...");
-		System.out.println("Total " + countImages(directory) + " images found");
-		new FileCrawler() {
+		FileCrawler crawler = new FileCrawler() {
 			@Override
-			public void processFile(File f) {
-				if (isImage(f.getName())) {
+			public void processFiles() {
+				double perComplete;
+				int proceededSize = 0;
+				double timeLeft = 0;
+				for (File f : machedFiles) {
 					try {
-						// TODO: Add progress bar by file sizes (also add ETA)
+						// TODO: Add progress bar by file sizes (also add ETA) (Done)
 						imageDao.saveIfNotExists(new Image(f));
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
+					
+					proceededSize += f.length();
+					perComplete = proceededSize * 100.0 / totalSize;
+					timeLeft = (System.nanoTime() - startTime[0]) / perComplete * (100 - perComplete) / 1e9 / 60;
+					System.out.println(Math.round(perComplete * 100) / 100.0 + "% complete, " + 
+							Math.round(timeLeft * 1000) / 1000.0 + " min left");
 				}
-				
 			}
-		}.crawl(directory);
-	}
-	
-	public int countImages(String directory) {
-		final int[] count = new int[1];
-		final long[] totalSize = new long[1];
-		new FileCrawler() {
+			
 			@Override
-			public void processFile(File f) {
-				if (isImage(f.getName())) {
-					totalSize[0] += f.length();
-					if (count[0]++ % 100 == 0)
-						System.out.println("Found " + count[0] + " images, total of " + totalSize[0] / (1024 * 1024) + "Mb");
-				}
-				
+			public boolean fileMatches(File f) {
+				return isImage(f.getName());
 			}
-		}.crawl(directory);
+		};
+		System.out.println("Counting the images...");
+		crawler.crawl(directory);
+		System.out.println("Total " + crawler.count + " images found");
 		
-		return count[0];
+		startTime[0] = System.nanoTime();
+		crawler.processFiles();
+		
 	}
 	
 	private boolean isImage(String fileName) {
