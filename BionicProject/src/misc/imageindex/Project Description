@@ -1,0 +1,26 @@
+Create a web interface that allows to:
+
+* Interactively search pictures by criteria:
+ - size [width x height], size int bytes (larger than ...), partial name, dublicates count (2, 3, 4...)
+ 
+* Display thumbnails of the found pictures
+
+* Have pagination (or, easier, simply display first 100 hits)
+ 
+
+
+Student
+==========
+student_id
+name
+
+
+Friends
+==========
+student1_id
+student2_id
+
+
+Output: pairs of friends
+============
+name1, name2

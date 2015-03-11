@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FileCrawler {
+public class FileCrawler {
 	
 	// TODO: Move counter and total bytes of matched files into the crawler (Done)
 	int count = 0;
@@ -28,8 +28,8 @@ public abstract class FileCrawler {
 					totalSize += file.length();
 					machedFiles.add(file);
 					if (count++ % 100 == 0)
-						System.out.println("Found " + count + " images, total of " + totalSize / (1024 * 1024) + "Mb");
-//					processFile(file);
+						System.out.println("Found " + count + " files, total of " + totalSize / (1024 * 1024) + "Mb");
+					processFile(file);
 				}
 			}
 		}
@@ -39,5 +39,7 @@ public abstract class FileCrawler {
 		return true;
 	}
 	
-	public abstract void processFiles();
+	public void processFile(File file) {
+		
+	}
 }

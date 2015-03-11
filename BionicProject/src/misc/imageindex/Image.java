@@ -39,7 +39,7 @@ public class Image {
 			sizeInBytes = file.length();
 			type = im.getType();
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("Reading image " +  file.getName());
 //			e.printStackTrace();
 			isCorrupted = true;
