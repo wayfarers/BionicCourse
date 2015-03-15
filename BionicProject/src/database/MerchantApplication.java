@@ -42,7 +42,7 @@ public class MerchantApplication {
 		}
 	}
 	
-	public static Connection getConnection() throws IOException, SQLException {
+	private static Connection getConnection() throws IOException, SQLException {
 		Connection conn = null;
 		Properties props = new Properties();
 		InputStreamReader in = new InputStreamReader(new FileInputStream(
@@ -55,3 +55,11 @@ public class MerchantApplication {
 		return conn;
 	}
 }
+
+/**
+ * Presentation layer: Web site, Standalone app, ...
+ * Service layer: PaymentService, ShopService
+ * Entities: Merchant, Customer
+ * DAO layer: MerchantDAO, CustomerDAO, ... - CRUD operations
+ * DataSource, ConnectionPool..
+ */

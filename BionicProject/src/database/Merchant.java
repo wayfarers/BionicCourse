@@ -33,7 +33,7 @@ public class Merchant {
 	
 	@Override
 	public String toString() {
-		return String.format("Name: %1s, charge: %2f, period: %3d, minsum: %4f, bankName: %5s, swift: %6s, account: %7s", 
+		return String.format("Merchant's info:\nName: %1s\ncharge: %2f\nperiod: %3d\nminsum: %4f\nbankName: %5s\nswift: %6s\naccount: %7s\n", 
 				name, charge, period, minSum, bankName, swift, account);
 	};
 	public String getName() {
