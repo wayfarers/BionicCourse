@@ -1,6 +1,7 @@
 package database;
 
 public class Merchant {
+	private int id;
 	private String name;
 	private double charge;
 	private int period;
@@ -20,8 +21,9 @@ public class Merchant {
 	 * @param swift
 	 * @param account
 	 */
-	public Merchant(String name, double charge, int period, double minSum,
+	public Merchant(int id, String name, double charge, int period, double minSum,
 			String bankName, String swift, String account) {
+		this.id = id;
 		this.name = name;
 		this.charge = charge;
 		this.period = period;
