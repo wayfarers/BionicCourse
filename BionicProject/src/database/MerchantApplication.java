@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -71,7 +72,7 @@ public class MerchantApplication {
 	
 	public static void addPayment(Connection con, int mer_id, int cost_id, String goods, double sumPayed, LocalDate date) {
 		double chargePayed = sumPayed * getCharge(con, mer_id) / 100;
-		java.sql.Timestamp dt = new java.sql.Timestamp(java.util.Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime());
+		Timestamp dt = new Timestamp(java.util.Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime());
 		
 		try {
 			String sql = "insert into payment (dt, merchantId, customerId, goods, sumPayed, chargePayed) values (?, ?, ?, ?, ?, ?)";
@@ -126,6 +127,7 @@ public class MerchantApplication {
 		}
 	}
 	
+	
 	public static void generatePayList(Connection con) {
 		try {
 			String sql = "select id, needtosend, minsum, lastsent from merchant";
@@ -172,4 +174,10 @@ public class MerchantApplication {
  * Entities: Merchant, Customer
  * DAO layer: MerchantDAO, CustomerDAO, ... - CRUD operations
  * DataSource, ConnectionPool..
+ * 
+ * 
+ * 
+ * ClientApplication
+ *   ClientDAO, MerchantDAO
+ *     RepositoryCOnfig (dbName, password, username, driveName)..
  */
