@@ -22,7 +22,7 @@ public class MerchantApplication {
 	public static void main(String[] args) {
 		Connection con = getConnection();
 		printReport(con);
-		generatePayList(con);
+//		generatePayList(con);
 //		List<Merchant> merchants = getMerchants();
 //		for (Merchant merchant : merchants) {
 //			System.out.println(merchant.toString());
@@ -119,12 +119,13 @@ public class MerchantApplication {
 	
 	public static void printReport(Connection con) {
 		try {
-			String sql = "select merchantid, sum(chargepayed) from PAYMENT group by MERCHANTID";
+			String sql = "select m.name, sum(chargepayed) as chargesum from PAYMENT P join "
+					+ "merchant M on (M.id = P.merchantid) group by name, MERCHANTID order by chargesum desc";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			System.out.println("Mer_id\tincome");
+			System.out.println("Name\t\tincome");
 			while (rs.next()) {
-				System.out.println("" + rs.getInt(1) + "\t" + rs.getDouble(2));
+				System.out.println("" + rs.getString(1) + " - " + rs.getDouble(2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
