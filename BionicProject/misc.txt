@@ -1,0 +1,13 @@
+/**
+ * Presentation layer: Web site, Standalone app, ...
+ * Service layer: PaymentService, ShopService
+ * Entities: Merchant, Customer
+ * DAO layer: MerchantDAO, CustomerDAO, ... - CRUD operations
+ * DataSource, ConnectionPool..
+ * 
+ * 
+ * 
+ * ClientApplication
+ *   ClientDAO, MerchantDAO
+ *     RepositoryCOnfig (dbName, password, username, driveName)..
+ */

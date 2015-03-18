@@ -21,8 +21,9 @@ public class MerchantApplication {
 	
 	public static void main(String[] args) {
 		Connection con = getConnection();
-		printReport(con);
-//		generatePayList(con);
+//		printReport(con);
+		generatePayList(con);
+		transferMoney(con, 3000);
 //		List<Merchant> merchants = getMerchants();
 //		for (Merchant merchant : merchants) {
 //			System.out.println(merchant.toString());
@@ -132,8 +133,6 @@ public class MerchantApplication {
 		}
 	}
 	
-	
-	
 	public static void generatePayList(Connection con) {
 		List<Merchant> merchants = getMerchants();
 		for (Merchant merchant : merchants) {
@@ -152,6 +151,7 @@ public class MerchantApplication {
 				compareDate = compareDate.minusMonths(1);
 				break;
 			}
+			
 			try {
 				if (needToSend > minsum || dt.after(Date.valueOf(compareDate))) {
 					String sql = "insert into paylist(merchantid, sumSent, sentDate, status) values(?,?,?,?)";
@@ -165,6 +165,53 @@ public class MerchantApplication {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+		System.out.println("Paylist generated");
+	}
+	
+	public static void transferMoney(Connection con, double availableSum) {
+		try {
+			String sql = "select id, merchantId, sumSent from paylist where status = '0'";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int id;
+			int mer_id;
+			double sumSend;
+			
+			while (rs.next()) {
+				id = rs.getInt(1);
+				mer_id = rs.getInt(2);
+				sumSend = rs.getDouble(3);
+				if (sumSend < availableSum) {
+					proceedPayment(con, id, mer_id, sumSend);
+					availableSum -= sumSend;
+				}
+			}
+			System.out.println("Transfer complete");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void proceedPayment(Connection con, int trans_id, int mer_id, double sumSend) {
+		try {
+			con.setAutoCommit(false);
+			String sql = "update merchant set needToSend = needToSend - ?, lastSent = ?, sent = sent + ? where id = ?";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setDouble(1, sumSend);
+			stmt.setDate(2, Date.valueOf(LocalDate.now()));
+			stmt.setDouble(3, sumSend);
+			stmt.setInt(4, mer_id);
+			stmt.executeUpdate();
+			
+			sql = "update paylist set status = '1' where id = ?";
+			PreparedStatement stmt2 = con.prepareStatement(sql);
+			stmt2.setInt(1, trans_id);
+			stmt2.executeUpdate();
+			con.commit();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -184,16 +231,3 @@ public class MerchantApplication {
 	
 }
 
-/**
- * Presentation layer: Web site, Standalone app, ...
- * Service layer: PaymentService, ShopService
- * Entities: Merchant, Customer
- * DAO layer: MerchantDAO, CustomerDAO, ... - CRUD operations
- * DataSource, ConnectionPool..
- * 
- * 
- * 
- * ClientApplication
- *   ClientDAO, MerchantDAO
- *     RepositoryCOnfig (dbName, password, username, driveName)..
- */

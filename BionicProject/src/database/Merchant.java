@@ -31,7 +31,7 @@ public class Merchant {
 		this.lastSent = dt;
 	}
 	
-	public enum Period {WEEKLY, BEWEEKLY, MONTHLY}
+	public enum Period {UNKNOWN, WEEKLY, BEWEEKLY, MONTHLY}
 	
 	@Override
 	public String toString() {
@@ -70,6 +70,8 @@ public class Merchant {
 		case 3:
 			this.period = Period.MONTHLY;
 			break;
+		default:
+			this.period = Period.UNKNOWN;
 		}
 	}
 	
