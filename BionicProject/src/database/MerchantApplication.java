@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -21,8 +22,8 @@ public class MerchantApplication {
 	public static void main(String[] args) {
 		Connection con = getConnection();
 		printReport(con);
-//		List<Merchant> merchants = new ArrayList<>();
-//		getMerchants(merchants);
+		generatePayList(con);
+//		List<Merchant> merchants = getMerchants();
 //		for (Merchant merchant : merchants) {
 //			System.out.println(merchant.toString());
 //		}
@@ -34,7 +35,8 @@ public class MerchantApplication {
 		System.exit(0);
 	}
 	
-	public static void getMerchants(List<Merchant> merchants) {
+	public static List<Merchant> getMerchants() {
+		List<Merchant> merchants = new ArrayList<>();
 		try (Connection con = getConnection()) {
 			String sql = "select * from merchant"; 
 			PreparedStatement stmt = con.prepareStatement(sql);
@@ -42,12 +44,14 @@ public class MerchantApplication {
 			
 			while (rs.next()){
 				merchants.add(new Merchant(rs.getInt("id"), rs.getString("name"), rs.getDouble("charge"), rs.getInt("period"), 
-						rs.getDouble("minSum"), rs.getString("bankName"), rs.getString("swift"), rs.getString("account")));
+						rs.getDouble("minSum"), rs.getString("bankName"), rs.getString("swift"), rs.getString("account"), 
+						rs.getDouble("needToSend"), rs.getDouble("sent"), rs.getDate("lastSent")));
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return merchants;
 	}
 	
 	private static Connection getConnection() {
@@ -128,27 +132,38 @@ public class MerchantApplication {
 	}
 	
 	
+	
 	public static void generatePayList(Connection con) {
-		try {
-			String sql = "select id, needtosend, minsum, lastsent from merchant";
-			PreparedStatement stmt = con.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			int id;
-			double needToSend;
-			double minsum;
-			Date dt;
-			while (rs.next()) {
-				id = rs.getInt(1);
-				needToSend = rs.getDouble(2);
-				minsum = rs.getDouble(3);
-				dt = rs.getDate(4);
-				if (needToSend > minsum || dt.after(Date.valueOf(LocalDate.now()))) {
-					String insertSql = "insert into paylist(merchantid, sumSent, snetDate, status) values()";
-					PreparedStatement stmt2 = con.prepareStatement(sql);
-				}
+		List<Merchant> merchants = getMerchants();
+		for (Merchant merchant : merchants) {
+			double needToSend = merchant.getNeedToSend();
+			double minsum = merchant.getMinSum();
+			Date dt = merchant.getLastSent();
+			LocalDate compareDate = LocalDate.now();
+			switch (merchant.getPeriod()) {
+			case WEEKLY:
+				compareDate = compareDate.minusWeeks(1);
+				break;
+			case BEWEEKLY:
+				compareDate = compareDate.minusWeeks(2);
+				break;
+			case MONTHLY:
+				compareDate = compareDate.minusMonths(1);
+				break;
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+			try {
+				if (needToSend > minsum || dt.after(Date.valueOf(compareDate))) {
+					String sql = "insert into paylist(merchantid, sumSent, sentDate, status) values(?,?,?,?)";
+					PreparedStatement stmt = con.prepareStatement(sql);
+					stmt.setInt(1, merchant.getId());
+					stmt.setDouble(2, needToSend);
+					stmt.setDate(3, Date.valueOf(LocalDate.now()));
+					stmt.setInt(4, 0);
+					stmt.executeUpdate();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
