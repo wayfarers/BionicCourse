@@ -7,15 +7,14 @@ public class Fibonachi {
 		ArrayList<Integer> list;
 		int n;
 		
-		
 		public CalcFibonachi(ArrayList<Integer> list, int n) {
 			this.list = list;
 			this.n = n;
 		}
 
-
 		@Override
 		public void run() {
+			System.out.println("Generating...");
 			if(n == 0) {
 				list.add(0);
 				return;
@@ -29,6 +28,7 @@ public class Fibonachi {
 			for (int i = 2; i <= n; i++) {
 				list.add(list.get(i - 1) + list.get(i - 2));
 			}
+			System.out.println("Generating complete");
 		}
 	}
 	
@@ -43,6 +43,7 @@ public class Fibonachi {
 			
 		@Override
 		public void run() {
+			System.out.println("Printing...");
 			try {
 				thread.join();
 			} catch (InterruptedException e) {
@@ -56,7 +57,7 @@ public class Fibonachi {
 	
 	public static void main(String[] args) {
 		ArrayList<Integer> list = new ArrayList<>();
-		Thread fib = new CalcFibonachi(list, 20);
+		Thread fib = new CalcFibonachi(list, 30);
 		fib.start();
 		new PrintFibonachi(list, fib).start();
 	}
