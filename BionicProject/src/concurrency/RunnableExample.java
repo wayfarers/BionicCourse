@@ -1,12 +1,12 @@
 package concurrency;
 
 public class RunnableExample implements Runnable{
-	Thread t;
+	Thread thread;
 	
 	public RunnableExample() {
 	}
-	public RunnableExample(Thread t) {
-		this.t = t;
+	public RunnableExample(Thread thread) {
+		this.thread = thread;
 	}
 	String name = "runnable";
 	@Override
@@ -20,7 +20,7 @@ public class RunnableExample implements Runnable{
 			}
 			if (i == 30) {
 				try {
-					t.join();
+					thread.join();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
