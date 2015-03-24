@@ -121,4 +121,17 @@ public class DepoList {
 			e.printStackTrace();
 		}
 	}
+	
+	public synchronized void add100(int index) {
+		DepoBase dep = list.get(index);
+		double sum = dep.getSum(); 
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		dep.setSum(sum + 100);
+		list.set(index, dep);
+	}
+	
 }

@@ -76,6 +76,12 @@ public class MerchantApplication {
 	}
 	
 	public static void addPayment(Connection con, int mer_id, int cost_id, String goods, double sumPayed, LocalDate date) {
+		
+		
+		
+
+		
+		
 		double chargePayed = sumPayed * getCharge(con, mer_id) / 100;
 		Timestamp dt = new Timestamp(java.util.Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime());
 		

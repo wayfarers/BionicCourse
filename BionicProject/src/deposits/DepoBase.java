@@ -34,6 +34,9 @@ abstract public class DepoBase implements Comparable<DepoBase>, Serializable{
 		return sum;
 	}
 	
+	public void setSum(double sum) {
+		this.sum = sum;
+	}
 	public double getInterestRate() {
 		return interestRate;
 	}
